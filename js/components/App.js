@@ -1,6 +1,7 @@
 var React = require('react');
 var AppActions = require('../actions/AppActions');
 var AppStore = require('../stores/AppStore');
+var AddForm = require('./AddForm');
 
 function getAppState() {
   return {
@@ -29,7 +30,7 @@ var App = React.createClass({
   render(){
     return(
       <div>
-        My App
+        <AddForm />
       </div>
     )
   }
