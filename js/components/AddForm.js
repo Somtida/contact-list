@@ -6,7 +6,12 @@ var AppStore = require('../stores/AppStore');
 var AddForm = React.createClass({
   handleSubmit(e) {
     e.preventDefault();
-    console.log('click');
+    var contact = {
+      name: this.refs.name.value.trim(),
+      phone: this.refs.phone.value.trim(),
+      email: this.refs.email.value.trim(),
+    }
+    AppActions.saveContact(contact);
   },
   render(){
     return(

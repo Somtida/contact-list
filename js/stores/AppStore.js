@@ -6,7 +6,7 @@ var AppAPI = require('../utils/appAPI.js');
 
 var CHANGE_EVENT = 'change';
 
-var _items = [];
+var _contacts = [];
 
 
 var AppStore = assign({}, EventEmitter.prototype, {
@@ -25,6 +25,15 @@ AppDispatcher.register(function(payload) {
   var action = payload.action;
 
   switch(action.actionType) {
+    case AppConstants.SAVE_CONTACT:
+      console.log('Saving Contact...');
+
+      // Store Save
+      AppStore.saveContact(action.contact);
+
+      //Emit Change
+      AppStore.Emit(CHANGE_EVENT);
+      break;
 
   }
 
