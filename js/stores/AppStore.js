@@ -10,13 +10,19 @@ var _contacts = [];
 
 
 var AppStore = assign({}, EventEmitter.prototype, {
-  emitChange: function() {
+  saveContact(contact) {
+    _contacts.push(contact);
+  },
+  getContacts(contact) {
+    return _contacts;
+  },
+  emitChange() {
     this.emit(CHANGE_EVENT);
   },
-  addChangeListener: function(callback) {
+  addChangeListener(callback) {
     this.on('change', callback);
   },
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener('change', callback);
   }
 });

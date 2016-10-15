@@ -5,7 +5,7 @@ var AddForm = require('./AddForm');
 
 function getAppState() {
   return {
-
+    contacts: AppStore.getContacts()
   }
 }
 
@@ -28,6 +28,7 @@ var App = React.createClass({
   },
 
   render(){
+    console.log(this.state.contacts);
     return(
       <div>
         <AddForm />
