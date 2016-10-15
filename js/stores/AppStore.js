@@ -38,7 +38,7 @@ AppDispatcher.register(function(payload) {
       AppStore.saveContact(action.contact);
 
       //Emit Change
-      AppStore.Emit(CHANGE_EVENT);
+      AppStore.emit(CHANGE_EVENT);
       break;
 
   }
