@@ -20105,7 +20105,7 @@ var AppActions = {
       contact
     });
   },
-  receiveContacts(contact) {
+  receiveContacts(contacts) {
     AppDispatcher.handleViewAction({
       actionType: AppConstants.RECEIVE_CONTACTS,
       contacts
@@ -20224,6 +20224,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var App = require('./components/App');
 var AppAPI = require('./utils/appAPI.js');
+
+AppAPI.getContacts();
 
 ReactDOM.render(
   React.createElement(App, null),
