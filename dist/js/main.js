@@ -20104,6 +20104,12 @@ var AppActions = {
       actionType: AppConstants.SAVE_CONTACT,
       contact
     });
+  },
+  receiveContacts(contact) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.RECEIVE_CONTACTS,
+      contacts
+    });
   }
 
 }
@@ -20193,7 +20199,8 @@ module.exports = App;
 
 },{"../actions/AppActions":165,"../stores/AppStore":171,"./AddForm":166,"react":164}],168:[function(require,module,exports){
 module.exports = {
-  SAVE_CONTACT: 'SAVE_CONTACT'
+  SAVE_CONTACT: 'SAVE_CONTACT',
+  RECEIVE_CONTACTS: 'RECEIVE_CONTACTS'
 }
 
 },{}],169:[function(require,module,exports){
@@ -20282,11 +20289,27 @@ var Firebase = require('firebase');
 var AppActions = require('../actions/AppActions');
 
 module.exports = {
-  saveContact: function(contact) {
+  saveContact(contact) {
     this.firebaseRef = new Firebase('https://ss-contactlist.firebaseio.com/contacts');
     this.firebaseRef.push({
       contact:contact
     });
+  },
+  getContacts() {
+    this.firebaseRef = new Firebase('https://ss-contactlist.firebaseio.com/contacts');
+    this.firebaseRef.once("value", snapshot => {
+      let contacts = [];
+      snapshot.forEach((childSnapshot) => {
+        let contact = {
+          id: childSnapshot.key(),
+          name: childSnapshot.val().contact.name,
+          phone: childSnapshot.val().contact.phone,
+          email: childSnapshot.val().contact.email,
+        }
+        contacts.push(contact);
+        AppActions.receiveContacts(contacts);
+      })
+    })
   }
 }
 
