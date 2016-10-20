@@ -19,7 +19,7 @@ var ContactList = React.createClass({
           </thead>
           <tbody>
             {
-              this.props.contacts.map(contact => {
+              this.props.contacts.map((contact,index) => {
                 return(
                   <Contact contact={contact} key={index} />
                 )

@@ -20205,10 +20205,16 @@ var AppActions = require('../actions/AppActions');
 var AppStore = require('../stores/AppStore');
 
 var Contact = React.createClass({displayName: "Contact",
+  handleEdit() {
+    console.log('click');
+  },
   render(){
     return(
       React.createElement("tr", null, 
-        React.createElement("td", null, this.props.contact.name)
+        React.createElement("td", null, this.props.contact.name), 
+        React.createElement("td", null, this.props.contact.phone), 
+        React.createElement("td", null, this.props.contact.email), 
+        React.createElement("td", null, React.createElement("a", {href: "#", className: "btn btn-warning", onClick: this.handleEdit}, "Edit"))
       )
     )
   }
@@ -20238,7 +20244,7 @@ var ContactList = React.createClass({displayName: "ContactList",
           ), 
           React.createElement("tbody", null, 
             
-              this.props.contacts.map(contact => {
+              this.props.contacts.map((contact,index) => {
                 return(
                   React.createElement(Contact, {contact: contact, key: index})
                 )
