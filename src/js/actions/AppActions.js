@@ -15,7 +15,10 @@ var AppActions = {
     });
   },
   removeContact(contactId) {
-    console.log(contactId);
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.REMOVE_CONTACT,
+      contactId
+    });
   }
 
 }

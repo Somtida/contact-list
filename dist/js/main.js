@@ -20110,6 +20110,12 @@ var AppActions = {
       actionType: AppConstants.RECEIVE_CONTACTS,
       contacts
     });
+  },
+  removeContact(contactId) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.REMOVE_CONTACT,
+      contactId
+    });
   }
 
 }
@@ -20208,8 +20214,8 @@ var Contact = React.createClass({displayName: "Contact",
   handleEdit() {
     console.log('Edit');
   },
-  handleDelete() {
-    console.log('Delete');
+  handleRemove(id,j) {
+    AppActions.removeContact(id);
   },
   render(){
     return(
@@ -20218,7 +20224,7 @@ var Contact = React.createClass({displayName: "Contact",
         React.createElement("td", null, this.props.contact.phone), 
         React.createElement("td", null, this.props.contact.email), 
         React.createElement("td", null, React.createElement("a", {href: "#", className: "btn btn-warning", onClick: this.handleEdit}, "Edit")), 
-        React.createElement("td", null, React.createElement("a", {href: "#", className: "btn btn-danger", onClick: this.handleDelete}, "Delete"))
+        React.createElement("td", null, React.createElement("a", {href: "#", className: "btn btn-danger", onClick: this.handleRemove.bind(this, this.props.contact.id)}, "Remove"))
       )
     )
   }
@@ -20267,7 +20273,8 @@ module.exports = ContactList;
 },{"../actions/AppActions":165,"../stores/AppStore":173,"./Contact":168,"react":164}],170:[function(require,module,exports){
 module.exports = {
   SAVE_CONTACT: 'SAVE_CONTACT',
-  RECEIVE_CONTACTS: 'RECEIVE_CONTACTS'
+  RECEIVE_CONTACTS: 'RECEIVE_CONTACTS',
+  REMOVE_CONTACT: 'REMOVE_CONTACT',
 }
 
 },{}],171:[function(require,module,exports){
@@ -20321,6 +20328,10 @@ var AppStore = assign({}, EventEmitter.prototype, {
   setContacts(contacts) {
     _contacts = contacts;
   },
+  removeContact(contactId) {
+    var index = _contacts.findIndex(x => x.id === contactId);
+    _contacts.splice(index,1);
+  },
   emitChange() {
     this.emit(CHANGE_EVENT);
   },
@@ -20354,6 +20365,16 @@ AppDispatcher.register(function(payload) {
 
       // Store Save
       AppStore.setContacts(action.contacts);
+
+      //Emit Change
+      AppStore.emit(CHANGE_EVENT);
+      break;
+
+    case AppConstants.REMOVE_CONTACT:
+      console.log('Removing Contact...');
+
+      // Store Save
+      AppStore.removeContact(action.contactId);
 
       //Emit Change
       AppStore.emit(CHANGE_EVENT);
