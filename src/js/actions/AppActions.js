@@ -19,7 +19,13 @@ var AppActions = {
       actionType: AppConstants.REMOVE_CONTACT,
       contactId
     });
-  }
+  },
+  editContact(contact) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.EDIT_CONTACT,
+      contact
+    });
+  },
 
 }
 

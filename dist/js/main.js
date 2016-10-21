@@ -20116,7 +20116,13 @@ var AppActions = {
       actionType: AppConstants.REMOVE_CONTACT,
       contactId
     });
-  }
+  },
+  editContact(contact) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.EDIT_CONTACT,
+      contact
+    });
+  },
 
 }
 
@@ -20223,7 +20229,7 @@ var Contact = React.createClass({displayName: "Contact",
         React.createElement("td", null, this.props.contact.name), 
         React.createElement("td", null, this.props.contact.phone), 
         React.createElement("td", null, this.props.contact.email), 
-        React.createElement("td", null, React.createElement("a", {href: "#", className: "btn btn-warning", onClick: this.handleEdit}, "Edit")), 
+        React.createElement("td", null, React.createElement("a", {href: "#", className: "btn btn-warning", onClick: this.handleEdit.bind(this, this.props.contact)}, "Edit")), 
         React.createElement("td", null, React.createElement("a", {href: "#", className: "btn btn-danger", onClick: this.handleRemove.bind(this, this.props.contact.id)}, "Remove"))
       )
     )
@@ -20275,6 +20281,7 @@ module.exports = {
   SAVE_CONTACT: 'SAVE_CONTACT',
   RECEIVE_CONTACTS: 'RECEIVE_CONTACTS',
   REMOVE_CONTACT: 'REMOVE_CONTACT',
+  EDIT_CONTACT: 'EDIT_CONTACT',
 }
 
 },{}],171:[function(require,module,exports){
@@ -20316,7 +20323,7 @@ var AppAPI = require('../utils/appAPI.js');
 var CHANGE_EVENT = 'change';
 
 var _contacts = [];
-
+var _contact_to_edit = '';
 
 var AppStore = assign({}, EventEmitter.prototype, {
   saveContact(contact) {
@@ -20331,6 +20338,9 @@ var AppStore = assign({}, EventEmitter.prototype, {
   removeContact(contactId) {
     var index = _contacts.findIndex(x => x.id === contactId);
     _contacts.splice(index,1);
+  },
+  setContactToEdit(contact) {
+    _contact_to_edit = contact;
   },
   emitChange() {
     this.emit(CHANGE_EVENT);
@@ -20383,6 +20393,16 @@ AppDispatcher.register(function(payload) {
       AppStore.emit(CHANGE_EVENT);
       break;
 
+    case AppConstants.EDIT_CONTACT:
+      console.log('Removing Contact...');
+
+      // Store Save
+      AppStore.setContactToEdit(action.contact);
+
+      //Emit Change
+      AppStore.emit(CHANGE_EVENT);
+      break;
+
   }
 
   return true;
@@ -20401,6 +20421,7 @@ module.exports = {
       contact:contact
     });
   },
+
   getContacts() {
     this.firebaseRef = new Firebase('https://ss-contactlist.firebaseio.com/contacts');
     this.firebaseRef.once("value", snapshot => {
@@ -20421,7 +20442,9 @@ module.exports = {
   removeContact(contactId) {
     this.firebaseRef = new Firebase(`https://ss-contactlist.firebaseio.com/contacts/${contactId}`);
     this.firebaseRef.remove();
-  }
+  },
+
+
 }
 
 },{"../actions/AppActions":165,"firebase":29}]},{},[172]);

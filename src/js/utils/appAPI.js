@@ -8,6 +8,7 @@ module.exports = {
       contact:contact
     });
   },
+
   getContacts() {
     this.firebaseRef = new Firebase('https://ss-contactlist.firebaseio.com/contacts');
     this.firebaseRef.once("value", snapshot => {
@@ -28,5 +29,7 @@ module.exports = {
   removeContact(contactId) {
     this.firebaseRef = new Firebase(`https://ss-contactlist.firebaseio.com/contacts/${contactId}`);
     this.firebaseRef.remove();
-  }
+  },
+
+
 }
