@@ -67,6 +67,9 @@ AppDispatcher.register(function(payload) {
       // Store Save
       AppStore.removeContact(action.contactId);
 
+      // API removeContact
+      AppAPI.removeContact(action.contactId);
+
       //Emit Change
       AppStore.emit(CHANGE_EVENT);
       break;

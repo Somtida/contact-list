@@ -20376,6 +20376,9 @@ AppDispatcher.register(function(payload) {
       // Store Save
       AppStore.removeContact(action.contactId);
 
+      // API removeContact
+      AppAPI.removeContact(action.contactId);
+
       //Emit Change
       AppStore.emit(CHANGE_EVENT);
       break;
@@ -20413,6 +20416,11 @@ module.exports = {
         AppActions.receiveContacts(contacts);
       })
     })
+  },
+
+  removeContact(contactId) {
+    this.firebaseRef = new Firebase(`https://ss-contactlist.firebaseio.com/contacts/${contactId}`);
+    this.firebaseRef.remove();
   }
 }
 
