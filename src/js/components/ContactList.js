@@ -14,7 +14,8 @@ var ContactList = React.createClass({
               <th>Name</th>
               <th>Phone</th>
               <th>Email</th>
-              <th></th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>

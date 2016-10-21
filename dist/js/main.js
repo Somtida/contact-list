@@ -20206,7 +20206,10 @@ var AppStore = require('../stores/AppStore');
 
 var Contact = React.createClass({displayName: "Contact",
   handleEdit() {
-    console.log('click');
+    console.log('Edit');
+  },
+  handleDelete() {
+    console.log('Delete');
   },
   render(){
     return(
@@ -20214,7 +20217,8 @@ var Contact = React.createClass({displayName: "Contact",
         React.createElement("td", null, this.props.contact.name), 
         React.createElement("td", null, this.props.contact.phone), 
         React.createElement("td", null, this.props.contact.email), 
-        React.createElement("td", null, React.createElement("a", {href: "#", className: "btn btn-warning", onClick: this.handleEdit}, "Edit"))
+        React.createElement("td", null, React.createElement("a", {href: "#", className: "btn btn-warning", onClick: this.handleEdit}, "Edit")), 
+        React.createElement("td", null, React.createElement("a", {href: "#", className: "btn btn-danger", onClick: this.handleDelete}, "Delete"))
       )
     )
   }
@@ -20239,7 +20243,8 @@ var ContactList = React.createClass({displayName: "ContactList",
               React.createElement("th", null, "Name"), 
               React.createElement("th", null, "Phone"), 
               React.createElement("th", null, "Email"), 
-              React.createElement("th", null)
+              React.createElement("th", null, "Edit"), 
+              React.createElement("th", null, "Delete")
             )
           ), 
           React.createElement("tbody", null, 
