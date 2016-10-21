@@ -6,8 +6,8 @@ var Contact = React.createClass({
   handleEdit() {
     console.log('Edit');
   },
-  handleRemove(i,j) {
-    console.log('Remove');
+  handleRemove(id,j) {
+    AppActions.removeContact(id);
   },
   render(){
     return(

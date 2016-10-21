@@ -13,6 +13,9 @@ var AppActions = {
       actionType: AppConstants.RECEIVE_CONTACTS,
       contacts
     });
+  },
+  removeContact(contactId) {
+    console.log(contactId);
   }
 
 }
