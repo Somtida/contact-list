@@ -20200,8 +20200,8 @@ var App = React.createClass({displayName: "App",
   },
 
   render(){
-    console.log(this.state.contactToEdit);
-    return(
+    if(this.state.contactToEdit.length)
+    return( 
       React.createElement("div", null, 
         React.createElement(AddForm, null), 
         React.createElement(ContactList, {contacts: this.state.contacts})

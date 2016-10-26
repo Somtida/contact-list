@@ -3,6 +3,7 @@ var AppActions = require('../actions/AppActions');
 var AppStore = require('../stores/AppStore');
 var AddForm = require('./AddForm');
 var ContactList = require('./ContactList');
+var EditForm = require('./EditForm');
 
 function getAppState() {
   return {
@@ -30,10 +31,10 @@ var App = React.createClass({
   },
 
   render(){
-    console.log(this.state.contactToEdit);
+    let form = this.state.contactToEdit.length ? <EditForm contactToEdit={this.state.contactToEdit} : <AddForm />;
     return(
       <div>
-        <AddForm />
+        {form}
         <ContactList contacts={this.state.contacts} />
       </div>
     )
