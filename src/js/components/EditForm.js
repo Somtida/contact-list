@@ -9,8 +9,8 @@ var EditForm = React.createClass({
     this.setState({selected:contactToEdit});
   },
   handleChange(fieldname, e) {
-    console.log('field',fieldname);
-    console.log('e',e.target.value);
+    // console.log('field',fieldname);
+    // console.log('e',e.target.value);
     var selected = this.state.selected;
     selected[fieldname] = e.target.value;
     this.setState({selected})
