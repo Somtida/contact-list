@@ -26,6 +26,9 @@ var AppStore = assign({}, EventEmitter.prototype, {
   setContactToEdit(contact) {
     _contact_to_edit = contact;
   },
+  getContactToEdit() {
+    return _contact_to_edit;
+  },
   emitChange() {
     this.emit(CHANGE_EVENT);
   },
@@ -78,7 +81,6 @@ AppDispatcher.register(function(payload) {
       break;
 
     case AppConstants.EDIT_CONTACT:
-      console.log('Removing Contact...');
 
       // Store Save
       AppStore.setContactToEdit(action.contact);

@@ -3,8 +3,8 @@ var AppActions = require('../actions/AppActions');
 var AppStore = require('../stores/AppStore');
 
 var Contact = React.createClass({
-  handleEdit() {
-    console.log('Edit');
+  handleEdit(id, j) {
+    AppActions.editContact(id);
   },
   handleRemove(id,j) {
     AppActions.removeContact(id);

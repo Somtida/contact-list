@@ -6,7 +6,8 @@ var ContactList = require('./ContactList');
 
 function getAppState() {
   return {
-    contacts: AppStore.getContacts()
+    contacts: AppStore.getContacts(),
+    contactToEdit: AppStore.getContactToEdit(),
   }
 }
 
@@ -29,7 +30,7 @@ var App = React.createClass({
   },
 
   render(){
-    console.log(this.state.contacts);
+    console.log(this.state.contactToEdit);
     return(
       <div>
         <AddForm />

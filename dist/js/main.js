@@ -20176,7 +20176,8 @@ var ContactList = require('./ContactList');
 
 function getAppState() {
   return {
-    contacts: AppStore.getContacts()
+    contacts: AppStore.getContacts(),
+    contactToEdit: AppStore.getContactToEdit(),
   }
 }
 
@@ -20199,7 +20200,7 @@ var App = React.createClass({displayName: "App",
   },
 
   render(){
-    console.log(this.state.contacts);
+    console.log(this.state.contactToEdit);
     return(
       React.createElement("div", null, 
         React.createElement(AddForm, null), 
@@ -20217,8 +20218,8 @@ var AppActions = require('../actions/AppActions');
 var AppStore = require('../stores/AppStore');
 
 var Contact = React.createClass({displayName: "Contact",
-  handleEdit() {
-    console.log('Edit');
+  handleEdit(id, j) {
+    AppActions.editContact(id);
   },
   handleRemove(id,j) {
     AppActions.removeContact(id);
@@ -20342,6 +20343,9 @@ var AppStore = assign({}, EventEmitter.prototype, {
   setContactToEdit(contact) {
     _contact_to_edit = contact;
   },
+  getContactToEdit() {
+    return _contact_to_edit;
+  },
   emitChange() {
     this.emit(CHANGE_EVENT);
   },
@@ -20394,7 +20398,6 @@ AppDispatcher.register(function(payload) {
       break;
 
     case AppConstants.EDIT_CONTACT:
-      console.log('Removing Contact...');
 
       // Store Save
       AppStore.setContactToEdit(action.contact);
