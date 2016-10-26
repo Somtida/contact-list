@@ -4,8 +4,23 @@ var AppStore = require('../stores/AppStore');
 
 
 var EditForm = React.createClass({
-  handleChange(e) {
+  handleChange(fieldname, event) {
+    var newState = event.target.value;
+    var selected = this.state.selected;
+    selected.name = newState;
+    this.setState({selected})
+  },
+  handleSubmit(e) {
     e.preventDefault();
+
+    var contact = {
+      id: this.props.contactToEdit.id,
+      name: this.refs.name.value.trim(),
+      phone: this.refs.phone.value.trim(),
+      email: this.refs.email.value.trim(),
+    }
+
+    AppActions.updateContact(contact);
 
   },
   render(){
@@ -22,7 +37,7 @@ var EditForm = React.createClass({
           <div className="form-group">
             <input className="form-control" type="email" ref="email" value={this.props.contactToEdit.email} onChange={this.handleChange.bind(this, 'email')} />
           </div>
-          <button className="btn btn-primary" type="submit">Edit</button>
+          <button className="btn btn-primary" type="submit">Submit</button>
         </form>
       </div>
     )

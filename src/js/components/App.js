@@ -31,10 +31,13 @@ var App = React.createClass({
   },
 
   render(){
-    let form = this.state.contactToEdit.length ? <EditForm contactToEdit={this.state.contactToEdit} : <AddForm />;
+    // let form = this.state.contactToEdit.length ? <EditForm contactToEdit={this.state.contactToEdit} /> : <AddForm />;
     return(
       <div>
-        {form}
+        {this.state.contactToEdit == '' ?
+          <AddForm /> :
+          <EditForm contactToEdit={this.state.contactToEdit} />
+        }
         <ContactList contacts={this.state.contacts} />
       </div>
     )
