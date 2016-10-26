@@ -31,5 +31,16 @@ module.exports = {
     this.firebaseRef.remove();
   },
 
+  updateContact(contact) {
+    let id = contact.id;
+    let updatedContact = {
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone,
+    }
+    this.firebaseRef = new Firebase(`https://ss-contactlist.firebaseio.com/contacts/${id}/contact`);
+    this.firebaseRef.update(updatedContact);
+  }
+
 
 }

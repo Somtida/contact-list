@@ -20123,6 +20123,12 @@ var AppActions = {
       contact
     });
   },
+  updateContact(contact) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.UPDATE_CONTACT,
+      contact
+    });
+  },
 
 }
 
@@ -20336,6 +20342,7 @@ module.exports = {
   RECEIVE_CONTACTS: 'RECEIVE_CONTACTS',
   REMOVE_CONTACT: 'REMOVE_CONTACT',
   EDIT_CONTACT: 'EDIT_CONTACT',
+  UPDATE_CONTACT: 'UPDATE_CONTACT',
 }
 
 },{}],172:[function(require,module,exports){
@@ -20399,6 +20406,14 @@ var AppStore = assign({}, EventEmitter.prototype, {
   getContactToEdit() {
     return _contact_to_edit;
   },
+  updateContactToEdit(contact) {
+    for(let i=0;i<_contacts.length;i++) {
+      if(_contacts[i].id == contact.id) {
+        _contacts.splice(i,1);
+        _contacts.push(contact);
+      }
+    }
+  },
   emitChange() {
     this.emit(CHANGE_EVENT);
   },
@@ -20459,6 +20474,18 @@ AppDispatcher.register(function(payload) {
       AppStore.emit(CHANGE_EVENT);
       break;
 
+    case AppConstants.UPDATE_CONTACT:
+
+      // Store Save
+      AppStore.updateContactToEdit(action.contact);
+
+      // API removeContact
+      AppAPI.updateContact(action.contact);
+
+      //Emit Change
+      AppStore.emit(CHANGE_EVENT);
+      break;
+
   }
 
   return true;
@@ -20499,6 +20526,17 @@ module.exports = {
     this.firebaseRef = new Firebase(`https://ss-contactlist.firebaseio.com/contacts/${contactId}`);
     this.firebaseRef.remove();
   },
+
+  updateContact(contact) {
+    let id = contact.id;
+    let updatedContact = {
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone,
+    }
+    this.firebaseRef = new Firebase(`https://ss-contactlist.firebaseio.com/contacts/${id}/contact`);
+    this.firebaseRef.update(updatedContact);
+  }
 
 
 }

@@ -26,6 +26,12 @@ var AppActions = {
       contact
     });
   },
+  updateContact(contact) {
+    AppDispatcher.handleViewAction({
+      actionType: AppConstants.UPDATE_CONTACT,
+      contact
+    });
+  },
 
 }
 
