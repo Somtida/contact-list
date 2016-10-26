@@ -20294,10 +20294,15 @@ var AppStore = require('../stores/AppStore');
 
 
 var EditForm = React.createClass({displayName: "EditForm",
-  handleChange(fieldname, event) {
-    var newState = event.target.value;
+  componentDidMount: function() {
+    let {contactToEdit} = this.props;
+    this.setState({selected:contactToEdit});
+  },
+  handleChange(fieldname, e) {
+    console.log('field',fieldname);
+    console.log('e',e.target.value);
     var selected = this.state.selected;
-    selected.name = newState;
+    selected[fieldname] = e.target.value;
     this.setState({selected})
   },
   handleSubmit(e) {
